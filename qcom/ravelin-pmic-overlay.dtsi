@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- */
-
 #include <dt-bindings/clock/qcom,rpmh.h>
 #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
 #include <dt-bindings/iio/qcom,spmi-adc7-pm6450.h>
@@ -155,47 +150,47 @@
 };
 
 &pmk8350_adc_tm {
-	/* Channel nodes */
+	io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>,
+			<&pmk8350_vadc PM6450_ADC7_AMUX1_GPIO2_100K_PU>,
+			<&pmk8350_vadc PMK8350_ADC7_AMUX_THM2_100K_PU>,
+			<&pmk8350_vadc PM6450_ADC7_AMUX4_GPIO5_100K_PU>,
+			<&pmk8350_vadc PM6450_ADC7_AMUX3_GPIO4_100K_PU>,
+			<&pmk8350_vadc PMK8350_ADC7_AMUX_THM3_100K_PU>;
+
 	pmk8350_xo_therm {
-		reg = <0>;
-		io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>;
+		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
 		qcom,ratiometric;
-		qcom,hw-settle-time-us = <200>;
+		qcom,hw-settle-time = <200>;
 	};
 
 	pm6450_quiet_therm {
-		reg = <1>;
-		io-channels = <&pmk8350_vadc PM6450_ADC7_AMUX1_GPIO2_100K_PU>;
+		reg = <PM6450_ADC7_AMUX1_GPIO2_100K_PU>;
 		qcom,ratiometric;
-		qcom,hw-settle-time-us = <200>;
+		qcom,hw-settle-time = <200>;
 	};
 
 	pmk8350_wide_rfc_therm {
-		reg = <2>;
-		io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM2_100K_PU>;
+		reg = <PMK8350_ADC7_AMUX_THM2_100K_PU>;
 		qcom,ratiometric;
-		qcom,hw-settle-time-us = <200>;
+		qcom,hw-settle-time = <200>;
 	};
 
 	pm6450_rear_cam_flash_therm {
-		reg = <3>;
-		io-channels = <&pmk8350_vadc PM6450_ADC7_AMUX4_GPIO5_100K_PU>;
+		reg = <PM6450_ADC7_AMUX4_GPIO5_100K_PU>;
 		qcom,ratiometric;
-		qcom,hw-settle-time-us = <200>;
+		qcom,hw-settle-time = <200>;
 	};
 
 	pm6450_pa2_therm {
-		reg = <4>;
-		io-channels = <&pmk8350_vadc PM6450_ADC7_AMUX3_GPIO4_100K_PU>;
+		reg = <PM6450_ADC7_AMUX3_GPIO4_100K_PU>;
 		qcom,ratiometric;
-		qcom,hw-settle-time-us = <200>;
+		qcom,hw-settle-time = <200>;
 	};
 
 	pmk8350_pa1_therm {
-		reg = <5>;
-		 io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM3_100K_PU>;
+		reg = <PMK8350_ADC7_AMUX_THM3_100K_PU>;
 		qcom,ratiometric;
-		qcom,hw-settle-time-us = <200>;
+		qcom,hw-settle-time = <200>;
 	};
 };
 
@@ -270,7 +265,7 @@
 			trip1 {
 				temperature = <115000>;
 				hysteresis = <0>;
-				type = "hot";
+				type = "passive";
 			};
 
 			trip2 {
@@ -284,7 +279,7 @@
 	sys-therm-6 {
 		polling-delay-passive = <0>;
 		polling-delay = <0>;
-		thermal-sensors = <&pmk8350_adc_tm 0>;
+		thermal-sensors = <&pmk8350_adc_tm PMK8350_ADC7_AMUX_THM1_100K_PU>;
 		trips {
 			active-config0 {
 				temperature = <125000>;
@@ -303,7 +298,7 @@
 	sys-therm-4 {
 		polling-delay-passive = <0>;
 		polling-delay = <0>;
-		thermal-sensors = <&pmk8350_adc_tm 2>;
+		thermal-sensors = <&pmk8350_adc_tm PMK8350_ADC7_AMUX_THM2_100K_PU>;
 		trips {
 			active-config0 {
 				temperature = <125000>;
@@ -322,7 +317,7 @@
 	sys-therm-1 {
 		polling-delay-passive = <0>;
 		polling-delay = <0>;
-		thermal-sensors = <&pmk8350_adc_tm 1>;
+		thermal-sensors = <&pmk8350_adc_tm PM6450_ADC7_AMUX1_GPIO2_100K_PU>;
 		trips {
 			active-config0 {
 				temperature = <125000>;
@@ -341,7 +336,7 @@
 	sys-therm-3 {
 		polling-delay-passive = <0>;
 		polling-delay = <0>;
-		thermal-sensors = <&pmk8350_adc_tm 3>;
+		thermal-sensors = <&pmk8350_adc_tm PM6450_ADC7_AMUX4_GPIO5_100K_PU>;
 		trips {
 			active-config0 {
 				temperature = <125000>;
@@ -360,7 +355,7 @@
 	sys-therm-11 {
 		polling-delay-passive = <0>;
 		polling-delay = <0>;
-		thermal-sensors = <&pmk8350_adc_tm 4>;
+		thermal-sensors = <&pmk8350_adc_tm PM6450_ADC7_AMUX3_GPIO4_100K_PU>;
 		trips {
 			active-config0 {
 				temperature = <125000>;
@@ -379,7 +374,7 @@
 	sys-therm-5 {
 		polling-delay-passive = <0>;
 		polling-delay = <0>;
-		thermal-sensors = <&pmk8350_adc_tm 5>;
+		thermal-sensors = <&pmk8350_adc_tm PMK8350_ADC7_AMUX_THM3_100K_PU>;
 		trips {
 			active-config0 {
 				temperature = <125000>;
@@ -472,7 +467,6 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 	status = "ok";
-	qcom,old-i2c-freq-cfg;
 
 	pm8010m@8 {
 		compatible = "qcom,i2c-pmic";
@@ -490,6 +484,11 @@
 			PM8010M_EN: qcom,pm8008-chip-en {
 				regulator-name = "pm8010m-chip-en";
 			};
+		};
+
+		qcom,revid@100 {
+			compatible = "qcom,qpnp-revid";
+			reg = <0x100>;
 		};
 	};
 
@@ -576,6 +575,11 @@
 				regulator-name = "pm8010n-chip-en";
 			};
 		};
+
+		qcom,revid@100 {
+			compatible = "qcom,qpnp-revid";
+			reg = <0x100>;
+		};
 	};
 
 	pm8010n@d {
@@ -633,7 +637,6 @@
 
 &pm6450_pwm_1 {
 	status = "ok";
-	qcom,mid-res-support;
 };
 
 &pm6450_gpios {

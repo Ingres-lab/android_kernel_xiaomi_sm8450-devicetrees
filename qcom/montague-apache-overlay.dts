@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
- */
-
 /dts-v1/;
 /plugin/;
 
@@ -11,6 +6,6 @@
 / {
 	model = "Qualcomm Technologies, Inc. Montague Apache IDP";
 	compatible = "qcom,montague-idp", "qcom,montague", "qcom,idp";
-	qcom,msm-id = <581 0x10000>, <582 0x10000>, <773 0x10000>, <774 0x10000>;
+	qcom,msm-id = <581 0x10000>, <582 0x10000>;
 	qcom,board-id = <0x10022 0x8>;
 };

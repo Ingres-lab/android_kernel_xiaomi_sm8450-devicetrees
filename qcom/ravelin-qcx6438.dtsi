@@ -1,10 +1,6 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- */
-
 &soc {
 	wil6210: qcom,wil6210 {
+		compatible = "qcom,wil6210";
 		qcom,pcie-parent = <&pcie0>;
 		qcom,wigig-en = <&tlmm 91 0>;
 		pinctrl-names = "default";

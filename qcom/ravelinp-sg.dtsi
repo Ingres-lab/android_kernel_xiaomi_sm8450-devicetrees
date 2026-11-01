@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- */
-
 #include "ravelin-sg.dtsi"
 
 / {
@@ -10,4 +5,9 @@
 	model = "Qualcomm Technologies, Inc. RavelinP SG";
 	compatible = "qcom,ravelinp";
 	qcom,msm-id = <654 0x10000>;
+};
+
+&msm_gpu {
+	/delete-property/qcom,gpu-model;
+	qcom,gpu-model = "AdrenoA12v1";
 };

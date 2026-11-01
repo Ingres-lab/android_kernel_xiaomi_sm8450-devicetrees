@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- */
-
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/spmi/spmi.h>
 
@@ -59,16 +54,16 @@
 				type = "passive";
 			};
 
-			trip1 {
+			pm6450_trip1: trip1 {
 				temperature = <115000>;
 				hysteresis = <0>;
-				type = "hot";
+				type = "passive";
 			};
 
 			trip2 {
 				temperature = <145000>;
 				hysteresis = <0>;
-				type = "critical";
+				type = "passive";
 			};
 		};
 	};

@@ -1,4 +1,5 @@
 DTC_INCLUDE += $(srctree)/../sm8450-modules/qcom/opensource/audio-kernel/include
+KBUILD_DTC_INCLUDE += $(srctree)/../sm8450-modules/qcom/opensource/audio-kernel/include
 
 dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-cdp.dtbo \
@@ -6,7 +7,10 @@ dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-qrd.dtbo \
                  waipio-audio-atp.dtbo \
                  waipio-audio-rumi.dtbo \
-                 waipio-audio-hdk.dtbo
+                 waipio-audio-hdk.dtbo \
+                 cupid-audio-mtp.dtbo \
+                 zeus-audio-mtp.dtbo \
+                 ingres-audio-mtp.dtbo
 
 dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
                  diwali-audio-idp.dtbo \
@@ -14,7 +18,8 @@ dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
                  diwali-audio-qrd.dtbo \
                  diwali-audio-atp.dtbo \
                  diwali-audio-idp-hsp.dtbo \
-                 diwali-audio-idp-usbc.dtbo
+                 diwali-audio-idp-usbc.dtbo \
+                 ziyi-audio-idp.dtbo
 
 dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-idp.dtbo \
@@ -24,11 +29,9 @@ dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-idp-wcn6750-amoled-rcm.dtbo \
                  parrot-audio-idp-wcn6755-amoled-rcm.dtbo \
                  parrot-audio-idp-wcn6755.dtbo \
-                 parrot-lite-audio-idp.dtbo \
-                 parrot-lite-audio-qrd.dtbo \
                  parrot-audio-qrd.dtbo \
                  parrot-audio-qrd-wcn6750.dtbo \
-                 parrot-audio-qrd-wcn6755.dtbo \
+                 parrot-audio-qrd-wcn6755.dts \
                  parrot-audio-atp.dtbo
 
 dtbo-$(CONFIG_ARCH_RAVELIN) += ravelin-audio.dtbo \
@@ -53,7 +56,15 @@ dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  ukee-audio-mtp-120fps.dtbo \
                  ukee-audio-mtp-nodisplay.dtbo \
                  ukee-audio-cdp-qhd.dtbo \
-                 ukee-audio-cdp.dtbo
+                 ukee-audio-cdp.dtbo \
+                 unicorn-audio.dtbo \
+                 thor-audio.dtbo \
+                 mayfly-audio.dtbo \
+                 mondrian-audio.dtbo \
+                 marble-audio.dtbo \
+                 zizhan-audio.dtbo \
+                 diting-audio.dtbo
+
 
  always-y    := $(dtb-y) $(dtbo-y)
  subdir-y    := $(dts-dirs)

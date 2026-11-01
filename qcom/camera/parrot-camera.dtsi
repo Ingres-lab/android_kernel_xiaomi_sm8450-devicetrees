@@ -518,12 +518,12 @@
 	#size-cells = <1>;
 	interrupt-parent = <&intc>;
 
-	cam_req_mgr: qcom,cam-req-mgr {
+	qcom,cam-req-mgr {
 		compatible = "qcom,cam-req-mgr";
 		status = "ok";
 	};
 
-	cam_sync: qcom,cam-sync {
+	qcom,cam-sync {
 		compatible = "qcom,cam-sync";
 		status = "ok";
 	};
@@ -856,7 +856,7 @@
 		};
 	};
 
-	cam_smmu: qcom,cam_smmu {
+	qcom,cam_smmu {
 		compatible = "qcom,msm-cam-smmu", "simple-bus";
 		status = "ok";
 		force_cache_allocs;
@@ -870,7 +870,6 @@
 				<&apps_smmu 0xC80 0x420>;
 			qcom,iommu-faults = "non-fatal";
 			qcom,iommu-dma-addr-pool = <0x100000 0xffe00000>;
-			qcom,iova-best-fit;
 			dma-coherent;
 			cam-smmu-label = "tfe";
 			tfe_iova_mem_map: iova-mem-map {
@@ -898,7 +897,6 @@
 			cam-smmu-label = "icp";
 			qcom,iommu-dma-addr-pool = <0x10c00000 0xee300000>;
 			iova-region-discard = <0xe0000000 0x800000>;
-			qcom,iova-best-fit;
 			dma-coherent;
 			icp_iova_mem_map: iova-mem-map {
 				iova-mem-region-shared {
@@ -948,7 +946,6 @@
 			qcom,iommu-faults = "non-fatal";
 			multiple-client-devices;
 			qcom,iommu-dma-addr-pool = <0x100000 0xffe00000>;
-			qcom,iova-best-fit;
 			cam-smmu-label = "cre";
 			dma-coherent;
 			cre_iova_mem_map: iova-mem-map {
@@ -970,7 +967,6 @@
 			iommus = <&apps_smmu 0x2000 0x0000>;
 			cam-smmu-label = "cpas-cdm";
 			qcom,iommu-dma-addr-pool = <0x100000 0xffe00000>;
-			qcom,iova-best-fit;
 			dma-coherent;
 			multiple-client-devices;
 			cpas_cdm_iova_mem_map: iova-mem-map {
@@ -993,7 +989,7 @@
 		};
 	};
 
-	cam_cpas: qcom,cam-cpas@ac13000 {
+	qcom,cam-cpas@ac13000 {
 		cell-index = <0>;
 		compatible = "qcom,cam-cpas";
 		label = "cpas";
@@ -1047,20 +1043,9 @@
 		control-camnoc-axi-clk;
 		camnoc-bus-width = <32>;
 		camnoc-axi-clk-bw-margin-perc = <20>;
-		cam-icc-path-names = "cam_ahb";
-		interconnect-names = "cam_ahb",
-			"cam_hf_0",
-			"cam_sf_0",
-			"cam_sf_icp";
-		interconnects = <&gem_noc MASTER_APPSS_PROC
-			        &cnoc2 SLAVE_CAMERA_CFG>,
-			<&mmss_noc MASTER_CAMNOC_HF
-				&mc_virt SLAVE_EBI1>,
-			<&mmss_noc MASTER_CAMNOC_SF
-				&mc_virt SLAVE_EBI1>,
-			<&mmss_noc MASTER_CAMNOC_ICP
-				&mc_virt SLAVE_EBI1>;
-
+		interconnect-names = "cam_ahb";
+		interconnects =<&gem_noc MASTER_APPSS_PROC
+			&cnoc2 SLAVE_CAMERA_CFG>;
 		rpmh-bcm-info = <12 0x4 0x800 0 4>;
 		cam-ahb-num-cases = <8>;
 		cam-ahb-bw-KBps =
@@ -1098,7 +1083,10 @@
 					<CAM_CPAS_TRAFFIC_MERGE_SUM>;
 					ib-bw-voting-needed;
 					qcom,axi-port-mnoc {
-                                                cam-icc-path-names = "cam_hf_0";
+						interconnect-names = "cam_hf_0";
+						interconnects =
+						<&mmss_noc MASTER_CAMNOC_HF
+						&mc_virt SLAVE_EBI1>;
 					};
 				};
 
@@ -1108,7 +1096,10 @@
 					traffic-merge-type =
 					<CAM_CPAS_TRAFFIC_MERGE_SUM>;
 					qcom,axi-port-mnoc {
-                                                 cam-icc-path-names = "cam_sf_0";
+						interconnect-names = "cam_sf_0";
+						interconnects =
+						<&mmss_noc MASTER_CAMNOC_SF
+						&mc_virt SLAVE_EBI1>;
 					};
 				};
 
@@ -1118,7 +1109,11 @@
 					traffic-merge-type =
 					<CAM_CPAS_TRAFFIC_MERGE_SUM>;
 					qcom,axi-port-mnoc {
-                                                  cam-icc-path-names = "cam_sf_icp";
+						interconnect-names =
+							"cam_sf_icp";
+						interconnects =
+						<&mmss_noc MASTER_CAMNOC_ICP
+						&mc_virt SLAVE_EBI1>;
 					};
 				};
 			};
@@ -1417,7 +1412,7 @@
 		};
 	};
 
-	cam_cdm_intf: qcom,cam-cdm-intf {
+	qcom,cam-cdm-intf {
 		compatible = "qcom,cam-cdm-intf";
 		cell-index = <0>;
 		label = "cam-cdm-intf";
@@ -1426,7 +1421,7 @@
 		status = "ok";
 	};
 
-	cam_rt_cdm0: qcom,cpas-cdm0@ac24000 {
+	qcom,cpas-cdm0@ac24000 {
 		cell-index = <0>;
 		compatible = "qcom,cam-cpas-cdm2_1";
 		label = "cpas-cdm";
@@ -1450,7 +1445,7 @@
 		status = "ok";
 	};
 
-	cam_isp: qcom,cam-isp {
+	qcom,cam-isp {
 		compatible = "qcom,cam-isp";
 		arch-compat = "tfe";
 		status = "ok";
@@ -1726,7 +1721,7 @@
 		status = "ok";
 	};
 
-	icp: qcom,cam-icp {
+	qcom,cam-icp {
 		compatible = "qcom,cam-icp";
 		compat-hw-name = "qcom,lx7",
 			"qcom,ipe0",
@@ -1739,7 +1734,7 @@
 		icp_use_pil;
 	};
 
-	cam_icp: qcom,lx7 {
+	cam_lx7: qcom,lx7 {
 		cell-index = <0>;
 		compatible = "qcom,cam-lx7";
 		reg = <0xac01000 0x400>,
@@ -1779,7 +1774,7 @@
 		status = "ok";
 	};
 
-	cam_cre: qcom,cam-cre {
+	qcom,cam-cre {
 		compatible = "qcom,cam-cre";
 		compat-hw-name = "qcom,cre";
 		num-cre = <1>;

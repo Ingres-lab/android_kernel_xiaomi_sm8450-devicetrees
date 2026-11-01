@@ -1,14 +1,9 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
- */
-
 #include "ravelin.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. Montague SoC";
 	compatible = "qcom,montague";
-	qcom,msm-id = <581 0x10000>, <773 0x10000>;
+	qcom,msm-id = <581 0x10000>;
 };
 
 &apps_rsc {
@@ -24,6 +19,7 @@
 &soc {
 	st54spi_gpio {
 		status = "ok";
+		compatible = "st,st54spi_gpio";
 		/* gpio used as SE_nRESET */
 		gpio-power_nreset = <&tlmm 48 0x00>;
 	};

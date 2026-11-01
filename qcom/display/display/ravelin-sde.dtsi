@@ -1,6 +1,6 @@
 #include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
-#include <dt-bindings/clock/qcom,sm4450-dispcc.h>
-#include <dt-bindings/clock/qcom,sm4450-gcc.h>
+#include <dt-bindings/clock/qcom,dispcc-ravelin.h>
+#include <dt-bindings/clock/qcom,gcc-ravelin.h>
 #include <dt-bindings/interconnect/qcom,ravelin.h>
 #include <dt-bindings/clock/qcom,rpmh.h>
 #include "ravelin-sde-common.dtsi"
@@ -24,9 +24,8 @@
 
 		qcom,msm-bus,active-only;
 		interconnects =
-			<&mmss_noc MASTER_MDP_DISP &mc_virt SLAVE_EBI1_DISP>,
 			<&mmss_noc MASTER_MDP_DISP &mc_virt SLAVE_EBI1_DISP>;
-		interconnect-names = "qcom,sde-data-bus0","qcom,sde-data-bus1";
+		interconnect-names = "qcom,sde-data-bus0";
 	};
 
 	mdss_rotator: qcom,mdss_rotator {
@@ -127,7 +126,6 @@
 	clock-rate = <0 0 506000000 506000000 19200000 506000000 200000000>;
 	clock-max-rate = <0 0 608000000 608000000 19200000 608000000 300000000>;
 
-	vdd-supply = <&disp_cc_mdss_core_gdsc>;
 	#power-domain-cells = <0>;
 	#list-cells = <1>;
 
@@ -142,25 +140,15 @@
 	qcom,sde-ib-bw-vote = <2500000 0 1600000>;
 	qcom,sde-has-idle-pc;
 	qcom,sde-vm-exclude-reg-names = "sid_phys";
-	qcom,platform-supply-entries {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		qcom,platform-supply-entry@0 {
-			reg = <0>;
-			qcom,supply-name = "vdd";
-			qcom,supply-min-voltage = <0>;
-			qcom,supply-max-voltage = <0>;
-			qcom,supply-enable-load = <0>;
-			qcom,supply-disable-load = <0>;
-		};
-	};
 };
-&disp_rsc_drv0 {
+
+&disp_rsc {
 	sde_rsc_rpmh {
 		compatible = "qcom,sde-rsc-rpmh";
 		cell-index = <0>;
 	};
 };
+
 &mdss_dsi0 {
 	vdda-1p2-supply = <&L16B>;
 	clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,

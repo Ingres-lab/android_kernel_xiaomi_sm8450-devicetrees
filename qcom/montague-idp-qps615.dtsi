@@ -1,14 +1,10 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
- */
-
 #include "montague-hsp.dtsi"
 
 &qupv3_se0_i2c {
 	status = "ok";
 
 	pcie0_i2c_ctrl: pcie0_i2c_ctrl {
+		compatible = "qcom,pcie-i2c-ntn3";
 		rc-index = <0x0>;
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
@@ -160,3 +156,4 @@
 		};
 	};
 };
+

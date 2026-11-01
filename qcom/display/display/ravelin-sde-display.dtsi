@@ -1,4 +1,4 @@
-#include <dt-bindings/clock/qcom,sm4450-dispcc.h>
+#include <dt-bindings/clock/qcom,dispcc-ravelin.h>
 #include "ravelin-sde-display-common.dtsi"
 
 &soc {
@@ -47,7 +47,7 @@
 			  * MDP clock nodes, no actual vote shall be added and this
 			  * change is done just to satisfy sync state requirements.
 			  */
-			<&dispcc DISP_CC_MDSS_MDP_CLK>;
+			 <&dispcc DISP_CC_MDSS_MDP_CLK>;
 	clock-names = "pll_byte_clk0", "pll_dsi_clk0",
 			"mdp_core_clk";
 };

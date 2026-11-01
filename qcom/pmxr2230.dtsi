@@ -1,10 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- */
-
 #include <dt-bindings/interrupt-controller/irq.h>
-#include <dt-bindings/leds/common.h>
 #include <dt-bindings/spmi/spmi.h>
 
 &spmi_bus {
@@ -35,35 +29,83 @@
 			#interrupt-cells = <2>;
 		};
 
-		led-controller {
-			compatible = "qcom,pm8350c-pwm";
-			#address-cells = <1>;
-			#size-cells = <0>;
+		pmxr2230_pwm_1: pwms@e800 {
+			compatible = "qcom,pwm-lpg";
+			reg = <0xe800>;
+			reg-names = "lpg-base";
 			#pwm-cells = <2>;
+			qcom,num-lpg-channels = <3>;
 			nvmem = <&pmk8550_sdam_21 &pmk8550_sdam_22>;
 			nvmem-names = "lpg_chan_sdam", "lut_sdam";
+			qcom,lut-sdam-base = <0x45>;
+			qcom,lut-patterns = <0 10 20 30 40 50 60 70 80 90 100
+					     90 80 70 60 50 40 30 20 10 0>;
+			qcom,tick-duration-us = <7800>;
 
-			led@1 {
-				reg = <1>;
-				color = <LED_COLOR_ID_RED>;
+			lpg@1 {
+				qcom,lpg-chan-id = <1>;
+				qcom,ramp-step-ms = <100>;
+				qcom,ramp-low-index = <0>;
+				qcom,ramp-high-index = <19>;
+				qcom,ramp-pattern-repeat;
+				qcom,lpg-sdam-base = <0x48>;
+			};
+
+			lpg@2 {
+				qcom,lpg-chan-id = <2>;
+				qcom,ramp-step-ms = <100>;
+				qcom,ramp-low-index = <0>;
+				qcom,ramp-high-index = <19>;
+				qcom,ramp-pattern-repeat;
+				qcom,lpg-sdam-base = <0x56>;
+			};
+
+			lpg@3 {
+				qcom,lpg-chan-id = <3>;
+				qcom,ramp-step-ms = <100>;
+				qcom,ramp-low-index = <0>;
+				qcom,ramp-high-index = <19>;
+				qcom,ramp-pattern-repeat;
+				qcom,lpg-sdam-base = <0x64>;
+			};
+		};
+
+		pmxr2230_pwm_2: pwms@eb00 {
+			compatible = "qcom,pwm-lpg";
+			reg = <0xeb00>;
+			reg-names = "lpg-base";
+			#pwm-cells = <2>;
+			qcom,num-lpg-channels = <1>;
+		};
+
+		pmxr2230_rgb: qcom,leds@ef00 {
+			compatible = "qcom,tri-led";
+			reg = <0xef00>;
+
+			red {
 				label = "red";
+				pwms = <&pmxr2230_pwm_1 0 1000000>;
+				led-sources = <0>;
+				linux,default-trigger = "timer";
 			};
 
-			led@2 {
-				reg = <2>;
-				color = <LED_COLOR_ID_GREEN>;
+			green {
 				label = "green";
+				pwms = <&pmxr2230_pwm_1 1 1000000>;
+				led-sources = <1>;
+				linux,default-trigger = "timer";
 			};
 
-			led@3 {
-				reg = <3>;
-				color = <LED_COLOR_ID_BLUE>;
+			blue {
 				label = "blue";
+				pwms = <&pmxr2230_pwm_1 2 1000000>;
+				led-sources = <2>;
+				linux,default-trigger = "timer";
 			};
 		};
 
 		pmxr2230_flash: qcom,flash_led@ee00 {
-			compatible = "qcom,qti-pm8350c-flash-led";
+			compatible = "qcom,pm8350c-flash-led";
 			reg = <0xee00>;
 			interrupts = <0x1 0xee 0x0 IRQ_TYPE_EDGE_RISING>,
 				     <0x1 0xee 0x3 IRQ_TYPE_EDGE_RISING>,
@@ -170,7 +212,7 @@
 		};
 
 		pmxr2230_bcl: bcl@4700 {
-			compatible = "qcom,pm8550-bcl-v5";
+			compatible = "qcom,bcl-v5";
 			reg = <0x4700 0x100>;
 			interrupts = <0x1 0x47 0x0 IRQ_TYPE_NONE>,
 					<0x1 0x47 0x1 IRQ_TYPE_NONE>,
@@ -215,6 +257,7 @@
 	pmxr2230-bcl-lvl0 {
 		polling-delay-passive = <100>;
 		polling-delay = <0>;
+		thermal-governor = "step_wise";
 		thermal-sensors = <&pmxr2230_bcl 5>;
 
 		trips {
@@ -229,6 +272,7 @@
 	pmxr2230-bcl-lvl1 {
 		polling-delay-passive = <100>;
 		polling-delay = <0>;
+		thermal-governor = "step_wise";
 		thermal-sensors = <&pmxr2230_bcl 6>;
 
 		trips {
@@ -243,6 +287,7 @@
 	pmxr2230-bcl-lvl2 {
 		polling-delay-passive = <100>;
 		polling-delay = <0>;
+		thermal-governor = "step_wise";
 		thermal-sensors = <&pmxr2230_bcl 7>;
 
 		trips {

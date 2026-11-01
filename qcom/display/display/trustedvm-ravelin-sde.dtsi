@@ -1,5 +1,6 @@
-#include <dt-bindings/clock/qcom,sm4450-gcc.h>
-#include <dt-bindings/clock/qcom,sm4450-dispcc.h>
+#include <dt-bindings/clock/mdss-5nm-pll-clk.h>
+#include <dt-bindings/clock/qcom,gcc-ravelin.h>
+#include <dt-bindings/clock/qcom,dispcc-ravelin.h>
 #include "ravelin-sde-common.dtsi"
 
 &soc {

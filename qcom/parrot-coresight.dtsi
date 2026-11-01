@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: BSD-3-Clause
-/*
- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- */
-
 &soc {
 	audio_etm0 {
 		compatible = "qcom,coresight-remote-etm";
@@ -22,7 +17,7 @@
 	};
 
 	tpdm_lpass_lpi: tpdm_lpass_lpi {
-		compatible = "arm,coresight-dummy-source";
+		compatible = "qcom,coresight-dummy";
 		coresight-name = "coresight-tpdm-lpass-lpi";
 		qcom,dummy-source;
 
@@ -83,7 +78,7 @@
 	};
 
 	lpass_stm: lpass_stm {
-		compatible = "arm,coresight-dummy-source";
+		compatible = "qcom,coresight-dummy";
 		coresight-name = "coresight-lpass-stm";
 		qcom,dummy-source;
 
@@ -300,7 +295,7 @@
 	};
 
 	tpdm_turing_llm: tpdm_turing_llm {
-		compatible = "arm,coresight-dummy-source";
+		compatible = "qcom,coresight-dummy";
 		coresight-name = "coresight-tpdm-turing-llm";
 		qcom,dummy-source;
 
@@ -566,11 +561,11 @@
 	};
 
 	snoc: snoc {
-		compatible = "arm,coresight-dummy-source";
+		compatible = "qcom,coresight-dummy";
 		coresight-name = "coresight-snoc";
 		qcom,dummy-source;
 
-		atid = <108>;
+		atid = <125>;
 		out-ports {
 			port {
 				snoc_out_funnel_in0: endpoint {
@@ -997,7 +992,7 @@
 	};
 
 	modem_diag: modem_diag {
-		compatible = "arm,coresight-dummy-source";
+		compatible = "qcom,coresight-dummy";
 		coresight-name = "coresight-modem-diag";
 		qcom,dummy-source;
 
@@ -1013,7 +1008,7 @@
 	};
 
 	tpdm_wcss: tpdm@109A4000 {
-		compatible = "arm,coresight-dummy-source";
+		compatible = "qcom,coresight-dummy";
 		qcom,dummy-source;
 
 		atid = <67>;
@@ -2930,7 +2925,7 @@ funnel_dl_center2: funnel@10ac4000 {
 	};
 
 	dummy_eud: dummy_sink {
-		compatible = "arm,coresight-dummy-sink";
+		compatible = "qcom,coresight-dummy";
 
 		coresight-name = "coresight-eud";
 

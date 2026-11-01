@@ -58,8 +58,6 @@
 	vddio-supply = <&display_panel_vddio>;
 	avdd-supply = <&display_panel_avdd>;
 
-	pwms = <&pm6450_pwm_1 0 0>;
-
 	pinctrl-names = "panel_active", "panel_suspend", "pwm_pin";
 	pinctrl-2 = <&lcd_backlight_pwm_default>;
 
