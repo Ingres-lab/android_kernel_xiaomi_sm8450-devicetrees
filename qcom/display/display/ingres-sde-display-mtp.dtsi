@@ -109,12 +109,18 @@
 	status = "disabled";
 };
 
+/*
+ * USB-C DisplayPort alt mode. Xiaomi ships this disabled on ingres (also in
+ * the stock dtbo); enabled here experimentally. ingres has a DIO4480 SBU/AUX
+ * switch instead of the FSA4480 the waipio base points at.
+ */
 &sde_dp {
-	status = "disabled";
+	status = "ok";
+	qcom,dp-aux-switch = <&dio4480>;
 };
 
 &mdss_mdp {
-	connectors = <&sde_dsi &smmu_sde_unsec &smmu_sde_sec &sde_wb &sde_rscc>;
+	connectors = <&sde_dsi &smmu_sde_unsec &smmu_sde_sec &sde_wb &sde_dp &sde_rscc>;
 };
 
 &soc {
