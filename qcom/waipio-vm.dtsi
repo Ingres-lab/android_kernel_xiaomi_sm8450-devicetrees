@@ -322,7 +322,7 @@
 
 	/* QUPv3_0 wrapper instance: North QUP */
 	qupv3_0: qcom,qupv3_0_geni_se@9c0000 {
-		compatible = "qcom,qupv3-geni-se";
+		compatible = "qcom,geni-se-qup", "qcom,qupv3-geni-se";
 		reg = <0x9c0000 0x2000>;
 		iommus = <&apps_smmu 0x5b8 0x0>;
 		qcom,iommu-group = <&qup_iommu_group>;

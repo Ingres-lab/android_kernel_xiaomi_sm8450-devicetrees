@@ -28,7 +28,7 @@
 
 	/* QUPv3_0  wrapper  instance */
 	qupv3_0: qcom,qupv3_0_geni_se@9c0000 {
-		compatible = "qcom,qupv3-geni-se";
+		compatible = "qcom,geni-se-qup", "qcom,qupv3-geni-se";
 		reg = <0x9c0000 0x2000>;
 		qcom,msm-bus,num-paths = <3>;
 		interconnect-names = "qup-core", "snoc-llcc", "qup-ddr";
@@ -388,7 +388,7 @@
 
 	/* QUPv3_1  wrapper  instance */
 	qupv3_1: qcom,qupv3_1_geni_se@ac0000 {
-		compatible = "qcom,qupv3-geni-se";
+		compatible = "qcom,geni-se-qup", "qcom,qupv3-geni-se";
 		reg = <0xac0000 0x2000>;
 		qcom,msm-bus,num-paths = <3>;
 		interconnect-names = "qup-core", "snoc-llcc", "qup-ddr";
@@ -728,7 +728,7 @@
 
 	/* QUPv3_2  wrapper  instance */
 	qupv3_2: qcom,qupv3_2_geni_se@8c0000 {
-		compatible = "qcom,qupv3-geni-se";
+		compatible = "qcom,geni-se-qup", "qcom,qupv3-geni-se";
 		reg = <0x8c0000 0x2000>;
 		qcom,msm-bus,num-paths = <3>;
 		interconnect-names = "qup-core", "snoc-llcc", "qup-ddr";

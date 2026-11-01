@@ -1509,9 +1509,13 @@
 	};
 
 	cache-controller@19200000 {
-		compatible = "qcom,waipio-llcc", "qcom,llcc-v21";
-		reg = <0x19200000 0x580000> , <0x19A00000 0x80000>;
-		reg-names = "llcc_base", "llcc_broadcast_base";
+		/* 6.6 llcc-qcom: one region per bank (mapped by index) + broadcast, as mainline sm8450 */
+		compatible = "qcom,sm8450-llcc", "qcom,waipio-llcc", "qcom,llcc-v21";
+		reg = <0x19200000 0x80000>, <0x19600000 0x80000>,
+		      <0x19300000 0x80000>, <0x19700000 0x80000>,
+		      <0x19a00000 0x80000>;
+		reg-names = "llcc0_base", "llcc1_base", "llcc2_base",
+			    "llcc3_base", "llcc_broadcast_base";
 		interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
 		cap-based-alloc-and-pwr-collapse;
 
@@ -1783,7 +1787,7 @@
 	};
 
 	aoss_qmp: power-controller@c300000 {
-		compatible = "qcom,waipio-aoss-qmp";
+		compatible = "qcom,sm8450-aoss-qmp", "qcom,aoss-qmp", "qcom,waipio-aoss-qmp";
 		reg = <0xc300000 0x400>;
 		interrupt-parent = <&ipcc_mproc>;
 		interrupts = <IPCC_CLIENT_AOP
@@ -2129,10 +2133,11 @@
 
 	ufshc_mem: ufshc@1d84000 {
 		compatible = "qcom,ufshc";
+		/* 6.6 ICE: one "ice" region, HWKM at ice + 0x8000 */
 		reg = <0x1d84000 0x3000>,
-		      <0x1d88000 0x8000>,
-		      <0x1d90000 0x9000>;
-		reg-names = "ufs_mem", "ufs_ice", "ufs_ice_hwkm";
+		      <0x1d88000 0x11000>;
+		reg-names = "ufs_mem", "ice";
+		qcom,ice-use-hwkm;
 		interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
 		phys = <&ufsphy_mem>;
 		phy-names = "ufsphy";
@@ -2353,7 +2358,8 @@
 			0x17840060 0x17850060 0x17860060 0x17870060>;
 	};
 
-	apps_rsc: rsc@17a00000 {
+	/* 6.6 rpmh-rsc binding: per-DRV child node; clients must sit under drv@N */
+	apps_rsc_top: rsc@17a00000 {
 		label = "apps_rsc";
 		compatible = "qcom,rpmh-rsc";
 		reg = <0x17a00000 0x10000>,
@@ -2365,51 +2371,68 @@
 			     <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
 			     <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
 			     /* No interrupt into GIC for DRV3 */
-		qcom,tcs-offset = <0xd00>;
-		qcom,drv-id = <2>;
-		qcom,tcs-config = <ACTIVE_TCS    3>,
-				  <SLEEP_TCS     2>,
-				  <WAKE_TCS      2>,
-				  <CONTROL_TCS   0>, /* PDC wakeup values will be written from TZ */
-				  <FAST_PATH_TCS 1>;
+		qcom,drv-count = <4>;
 		power-domains = <&CLUSTER_PD>;
 
-		apps_bcm_voter: bcm_voter {
-			compatible = "qcom,bcm-voter";
-		};
+		apps_rsc: drv@2 {
+			qcom,drv-id = <2>;
+			qcom,tcs-offset = <0xd00>;
+			qcom,tcs-distance = <0x2a0>;
 
-		clock_rpmh: qcom,rpmhclk {
-			compatible = "qcom,waipio-rpmh-clk";
-			#clock-cells = <1>;
-		};
+			channel@0 {
+				qcom,tcs-config = <ACTIVE_TCS    3>,
+						  <SLEEP_TCS     2>,
+						  <WAKE_TCS      2>,
+						  <CONTROL_TCS   0>, /* PDC wakeup values will be written from TZ */
+						  <FAST_PATH_TCS 1>;
+			};
 
-		dcvs_fp: qcom,dcvs-fp {
-			compatible = "qcom,dcvs-fp";
-			qcom,ddr-bcm-name = "MC3";
-			qcom,llcc-bcm-name = "SH5";
+			apps_bcm_voter: bcm_voter {
+				compatible = "qcom,bcm-voter";
+			};
+
+			clock_rpmh: qcom,rpmhclk {
+				compatible = "qcom,sm8450-rpmh-clk", "qcom,waipio-rpmh-clk";
+				#clock-cells = <1>;
+			};
+
+			dcvs_fp: qcom,dcvs-fp {
+				compatible = "qcom,dcvs-fp";
+				qcom,ddr-bcm-name = "MC3";
+				qcom,llcc-bcm-name = "SH5";
+			};
 		};
 	};
 
-	disp_rsc: rsc@af20000 {
+	disp_rsc_top: rsc@af20000 {
 		label = "disp_rsc";
 		compatible = "qcom,rpmh-rsc";
 		reg = <0xaf20000 0x10000>;
 		reg-names = "drv-0";
 		interrupts = <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>;
 		clocks = <&clock_dispcc DISP_CC_MDSS_RSCC_AHB_CLK>;
-		qcom,tcs-offset = <0x1c00>;
-		qcom,drv-id = <0>;
-		qcom,tcs-config = <ACTIVE_TCS    0>,
-				  <SLEEP_TCS     1>,
-				  <WAKE_TCS      1>,
-				  <CONTROL_TCS   0>,
-				  <FAST_PATH_TCS 0>;
+		qcom,drv-count = <1>;
 
-		disp_bcm_voter: bcm_voter {
-			compatible = "qcom,bcm-voter";
-			qcom,tcs-wait = <QCOM_ICC_TAG_AMC>;
+		disp_rsc: drv@0 {
+			qcom,drv-id = <0>;
+			qcom,tcs-offset = <0x1c00>;
+			qcom,tcs-distance = <0x2a0>;
+
+			channel@0 {
+				qcom,tcs-config = <ACTIVE_TCS    0>,
+						  <SLEEP_TCS     1>,
+						  <WAKE_TCS      1>,
+						  <CONTROL_TCS   0>,
+						  <FAST_PATH_TCS 0>;
+			};
+
+			disp_bcm_voter: bcm_voter {
+				compatible = "qcom,bcm-voter";
+				qcom,tcs-wait = <QCOM_ICC_TAG_AMC>;
+			};
 		};
 	};
+
 
 	cpuss-sleep-stats@17800054 {
 	      compatible = "qcom,cpuss-sleep-stats";
