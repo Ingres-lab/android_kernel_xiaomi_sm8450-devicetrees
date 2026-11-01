@@ -1,0 +1,27 @@
+/dts-v1/;
+/plugin/;
+
+/*
+ * ingres: single combined overlay (board + SDE + panel). ABL applies exactly one
+ * dtbo entry with libufdt, which cannot resolve labels that a previously applied
+ * overlay introduced, so everything that references the SDE nodes must be in the
+ * same overlay as the SDE nodes themselves.
+ */
+#include <dt-bindings/clock/qcom,camcc-waipio.h>
+#include <dt-bindings/clock/qcom,videocc-waipio.h>
+#include <dt-bindings/clock/qcom,dispcc-waipio.h>
+
+#include "ingres-sm8450.dtsi"
+#include "ingres-wl2866d.dtsi"
+#include "display/display/waipio-sde.dtsi"
+#include "display/display/ingres-sde-display-mtp.dtsi"
+/* MMRM (multimedia clock arbiter): msm_drm/camera/video register clients with it */
+#include "mmrm/waipio-v2-mmrm.dtsi"
+
+/ {
+	model = "Ingres based on Qualcomm Technologies, Inc SM8450";
+	compatible = "qcom,waipio-mtp", "qcom,waipio", "qcom,mtp";
+	qcom,msm-id = <457 0x10000>, <482 0x10000>, <457 0x20000>, <482 0x20000>, <552 0x10000>;
+	qcom,board-id = <0x10008 0>, <0x03010008 0x03>;
+	xiaomi,miboard-id = <0x4 0>;
+};

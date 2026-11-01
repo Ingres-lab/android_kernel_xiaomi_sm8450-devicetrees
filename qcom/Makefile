@@ -864,6 +864,7 @@ clean-files	:= *.dtb *.dtbo
 
 # --- ingres: restrict the DTB/DTBO set to this device ------------------------
 dtb-y := waipio.dtb waipiop.dtb waipio-v2.dtb waipiop-v2.dtb waipio-lte.dtb
-dtbo-y := ingres-sm8450-pm8008-overlay.dtbo
+dtbo-y := ingres-sm8450-full-overlay.dtbo
+ingres-sm8450-full-overlay.dtbo-base := waipio.dtb waipiop.dtb waipio-v2.dtb waipiop-v2.dtb waipio-lte.dtb
 always-y := $(dtb-y) $(dtbo-y)
 subdir-y :=
