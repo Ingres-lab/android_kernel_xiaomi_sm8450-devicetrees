@@ -30,6 +30,10 @@
 	qupv3_0: qcom,qupv3_0_geni_se@9c0000 {
 		compatible = "qcom,geni-se-qup", "qcom,qupv3-geni-se";
 		reg = <0x9c0000 0x2000>;
+		/* 6.6 qcom-geni-se (geni-se-qup) requires the wrapper AHB clocks */
+		clock-names = "m-ahb", "s-ahb";
+		clocks = <&clock_gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+			<&clock_gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
 		qcom,msm-bus,num-paths = <3>;
 		interconnect-names = "qup-core", "snoc-llcc", "qup-ddr";
 		interconnects =
@@ -390,6 +394,10 @@
 	qupv3_1: qcom,qupv3_1_geni_se@ac0000 {
 		compatible = "qcom,geni-se-qup", "qcom,qupv3-geni-se";
 		reg = <0xac0000 0x2000>;
+		/* 6.6 qcom-geni-se (geni-se-qup) requires the wrapper AHB clocks */
+		clock-names = "m-ahb", "s-ahb";
+		clocks = <&clock_gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+			<&clock_gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
 		qcom,msm-bus,num-paths = <3>;
 		interconnect-names = "qup-core", "snoc-llcc", "qup-ddr";
 		interconnects =
@@ -730,6 +738,10 @@
 	qupv3_2: qcom,qupv3_2_geni_se@8c0000 {
 		compatible = "qcom,geni-se-qup", "qcom,qupv3-geni-se";
 		reg = <0x8c0000 0x2000>;
+		/* 6.6 qcom-geni-se (geni-se-qup) requires the wrapper AHB clocks */
+		clock-names = "m-ahb", "s-ahb";
+		clocks = <&clock_gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
+			<&clock_gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
 		qcom,msm-bus,num-paths = <3>;
 		interconnect-names = "qup-core", "snoc-llcc", "qup-ddr";
 		interconnects =

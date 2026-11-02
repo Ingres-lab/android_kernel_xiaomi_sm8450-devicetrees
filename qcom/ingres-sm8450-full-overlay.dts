@@ -17,6 +17,10 @@
 #include "display/display/ingres-sde-display-mtp.dtsi"
 /* MMRM (multimedia clock arbiter): msm_drm/camera/video register clients with it */
 #include "mmrm/waipio-v2-mmrm.dtsi"
+/* audio: sound card, adsp-loader, LPASS codecs; ABL applies one dtbo entry, so it must be here */
+#include "audio/waipio-audio.dtsi"
+#include "audio/waipio-audio-mtp.dtsi"
+#include "audio/ingres-audio.dtsi"
 
 / {
 	model = "Ingres based on Qualcomm Technologies, Inc SM8450";
