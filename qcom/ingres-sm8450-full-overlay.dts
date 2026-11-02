@@ -29,3 +29,11 @@
 	qcom,board-id = <0x10008 0>, <0x03010008 0x03>;
 	xiaomi,miboard-id = <0x4 0>;
 };
+
+/*
+ * 6.6 kgsl takes the GPU chip id from DT (or socinfo part info, absent on
+ * waipio); 5.10 had it in the gpu list. Adreno 730 v2 = gen7_0_1.
+ */
+&msm_gpu {
+	qcom,chipid = <0x07030001>;
+};
