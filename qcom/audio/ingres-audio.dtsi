@@ -3,6 +3,10 @@
 &waipio_snd {
 	/* no WSA883x amps on ingres (CS35L41 over TDM); stock has 0 */
 	qcom,wsa-max-devs = <0>;
+	/* stock: amps on TERT TDM (cs35l41 2-0040..43); no MI2S/AUXPCM back ends */
+	qcom,tdm-audio-intf = <1>;
+	qcom,mi2s-audio-intf = <0>;
+	qcom,auxpcm-audio-intf = <0>;
 	fsa4480-i2c-handle = <&dio4480>;
 	asoc-codec = <&stub_codec>, <&lpass_cdc>,
 			<&wcd938x_codec>, <&swr_haptics>,
@@ -10,6 +14,57 @@
 	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc",
 			"wcd938x_codec", "swr-haptics",
 			"wsa-codec1", "wsa-codec2";
+	/* stock routing: no swr-haptics (HAP_IN) or WSA speaker routes; 6.6 fails card bind on a bad route */
+	qcom,audio-routing =
+		"AMIC1", "Analog Mic1",
+		"AMIC1", "MIC BIAS1",
+		"AMIC2", "Analog Mic2",
+		"AMIC2", "MIC BIAS2",
+		"AMIC3", "Analog Mic3",
+		"AMIC3", "MIC BIAS3",
+		"AMIC4", "Analog Mic4",
+		"AMIC4", "MIC BIAS3",
+		"AMIC5", "Analog Mic5",
+		"AMIC5", "MIC BIAS4",
+		"VA AMIC1", "Analog Mic1",
+		"VA AMIC1", "VA MIC BIAS1",
+		"VA AMIC2", "Analog Mic2",
+		"VA AMIC2", "VA MIC BIAS2",
+		"VA AMIC3", "Analog Mic3",
+		"VA AMIC3", "VA MIC BIAS3",
+		"VA AMIC4", "Analog Mic4",
+		"VA AMIC4", "VA MIC BIAS3",
+		"VA AMIC5", "Analog Mic5",
+		"VA AMIC5", "VA MIC BIAS4",
+		"TX DMIC0", "Digital Mic0",
+		"Digital Mic0", "MIC BIAS3",
+		"TX DMIC1", "Digital Mic1",
+		"Digital Mic1", "MIC BIAS3",
+		"TX DMIC2", "Digital Mic2",
+		"Digital Mic2", "MIC BIAS1",
+		"TX DMIC3", "Digital Mic3",
+		"Digital Mic3", "MIC BIAS1",
+		"IN1_HPHL", "HPHL_OUT",
+		"IN2_HPHR", "HPHR_OUT",
+		"IN3_AUX", "AUX_OUT",
+		"RX_TX DEC0_INP", "TX DEC0 MUX",
+		"RX_TX DEC1_INP", "TX DEC1 MUX",
+		"RX_TX DEC2_INP", "TX DEC2 MUX",
+		"RX_TX DEC3_INP", "TX DEC3 MUX",
+		"TX SWR_INPUT", "WCD_TX_OUTPUT",
+		"VA SWR_INPUT", "VA_SWR_CLK",
+		"VA SWR_INPUT", "WCD_TX_OUTPUT",
+		"VA_AIF1 CAP", "VA_SWR_CLK",
+		"VA_AIF2 CAP", "VA_SWR_CLK",
+		"VA_AIF3 CAP", "VA_SWR_CLK",
+		"VA DMIC0", "Digital Mic0",
+		"VA DMIC1", "Digital Mic1",
+		"VA DMIC2", "Digital Mic2",
+		"VA DMIC3", "Digital Mic3",
+		"Digital Mic0", "VA MIC BIAS3",
+		"Digital Mic1", "VA MIC BIAS3",
+		"Digital Mic2", "VA MIC BIAS1",
+		"Digital Mic3", "VA MIC BIAS1";
 };
 
 &soc {
