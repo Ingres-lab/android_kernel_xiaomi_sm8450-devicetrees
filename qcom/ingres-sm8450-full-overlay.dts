@@ -21,6 +21,17 @@
 #include "audio/waipio-audio.dtsi"
 #include "audio/waipio-audio-mtp.dtsi"
 #include "audio/ingres-audio.dtsi"
+/* camera: core (CPAS/ICP/IFE/CSIPHY/CCI, cam_req_mgr), waipio v2 clock rates, ingres sensors */
+#include <dt-bindings/interconnect/qcom,waipio.h>
+#include "camera/waipio-camera.dtsi"
+#include "camera/ingres-waipio-camera-v2.dtsi"
+#include "camera/ingres-sm8450-camera-sensor.dtsi"
+
+/* video codec (msm_vidc, iris2) */
+#include "video/waipio-vidc.dtsi"
+
+/* EVA/CVP engine (CamX EVANode needs a session) */
+#include "eva/eva/waipio-eva.dtsi"
 
 / {
 	model = "Ingres based on Qualcomm Technologies, Inc SM8450";

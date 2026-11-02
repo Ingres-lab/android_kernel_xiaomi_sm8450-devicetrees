@@ -865,6 +865,8 @@ clean-files	:= *.dtb *.dtbo
 # ingres: the combined overlay includes the audio DT, which uses the
 # audio-kernel's <bindings/...> headers
 DTC_INCLUDE += $(srctree)/../sm8450-modules/qcom/opensource/audio-kernel/include
+# ... and the camera DT, which uses camera-kernel's <dt-bindings/msm-camera.h>
+DTC_INCLUDE += $(srctree)/../sm8450-modules/qcom/opensource/camera-kernel
 
 # --- ingres: restrict the DTB/DTBO set to this device ------------------------
 dtb-y := waipio.dtb waipiop.dtb waipio-v2.dtb waipiop-v2.dtb waipio-lte.dtb

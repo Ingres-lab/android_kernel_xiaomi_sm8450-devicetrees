@@ -53,6 +53,10 @@
 			label = "cvp-cnoc";
 			qcom,bus-master = <MASTER_APPSS_PROC>;
 			qcom,bus-slave = <SLAVE_VENUS_CFG>;
+			/* 6.6: of_icc_get() looks the path up by label */
+			interconnect-names = "cvp-cnoc";
+			interconnects = <&gem_noc MASTER_APPSS_PROC
+					&config_noc SLAVE_VENUS_CFG>;
 			qcom,bus-governor = "performance";
 			qcom,bus-range-kbps = <1000 1000>;
 		};
@@ -62,6 +66,9 @@
 			label = "cvp-ddr";
 			qcom,bus-master = <MASTER_VIDEO_PROC>;
 			qcom,bus-slave = <SLAVE_EBI1>;
+			interconnect-names = "cvp-ddr";
+			interconnects = <&mmss_noc MASTER_VIDEO_PROC
+					&mc_virt SLAVE_EBI1>;
 			qcom,bus-governor = "performance";
 			qcom,bus-range-kbps = <1000 6533000>;
 		};
