@@ -1,6 +1,8 @@
 /* ingres audio board changes (body of ingres-audio-mtp.dts), included by the combined overlay */
 
 &waipio_snd {
+	/* no WSA883x amps on ingres (CS35L41 over TDM); stock has 0 */
+	qcom,wsa-max-devs = <0>;
 	fsa4480-i2c-handle = <&dio4480>;
 	asoc-codec = <&stub_codec>, <&lpass_cdc>,
 			<&wcd938x_codec>, <&swr_haptics>,
