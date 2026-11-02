@@ -67,6 +67,19 @@
 		"Digital Mic3", "VA MIC BIAS1";
 };
 
+/*
+ * Reuse the tert_mi2s client node (it sits before the sound card, so the
+ * card finds its device at probe) but mux the stock TDM group, which adds
+ * the data-out pin gpio124.
+ */
+&cdc_tert_mi2s_gpios {
+	status = "ok";
+	pinctrl-0 = <&tert_tdm_clk_active &tert_tdm_ws_active
+			&tert_tdm_din_active &tert_tdm_dout_active>;
+	pinctrl-1 = <&tert_tdm_clk_sleep &tert_tdm_ws_sleep
+			&tert_tdm_din_sleep &tert_tdm_dout_sleep>;
+};
+
 &soc {
 	sbu_uart_en: msm_cdc_pinctrl@12 {
 		compatible = "qcom,msm-cdc-pinctrl";
