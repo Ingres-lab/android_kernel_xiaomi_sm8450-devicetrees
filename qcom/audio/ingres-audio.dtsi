@@ -43,3 +43,21 @@
 &swr_dmic_04 {
         status = "disabled";
 };
+
+/* ingres has no WSA883x speaker amps (CS35L41 instead); as on stock, keep the
+ * WSA enable pins free (GPIO 71 is the game-key hall sensor) */
+&wsa_spkr_en1 {
+	status = "disabled";
+};
+
+&wsa_spkr_en2 {
+	status = "disabled";
+};
+
+&wsa2_spkr_en1 {
+	status = "disabled";
+};
+
+&wsa2_spkr_en2 {
+	status = "disabled";
+};
