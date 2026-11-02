@@ -927,3 +927,29 @@
 };
 
 
+
+/*
+ * 6.6 pci-msm reads per-clock rates and suppressible flags from these
+ * (5.10 used max-clock-frequency-hz); without them RC0 fails with -EINVAL
+ * and the qca6490 WLAN chip is never enumerated. Order follows clock-names.
+ */
+&pcie0 {
+	/* 6.6 looks up pipe/ref/rate-change clocks and the PHY reset by these names */
+	clock-names = "pcie_pipe_clk", "pcie_ref_clk_src", "pcie_0_aux_clk",
+		"pcie_0_cfg_ahb_clk", "pcie_0_mstr_axi_clk", "pcie_0_slv_axi_clk",
+		"pcie_0_ldo", "pcie_0_slv_q2a_axi_clk", "pcie_rate_change_clk",
+		"pcie_ddrss_sf_tbu_clk", "pcie_aggre_noc_0_axi_clk",
+		"pcie_aggre_noc_1_axi_clk", "pcie_pipe_clk_mux",
+		"pcie_pipe_clk_ext_src";
+	reset-names = "pcie_0_core_reset", "pcie_phy_reset";
+	/* 6.6 names: vreg-1p2 is required (the same 1.2V L6 rail 5.10 called 1p8) */
+	vreg-1p2-supply = <&pm8350_l6>;
+	qcom,vreg-1p2-voltage-level = <1200000 1200000 18200>;
+	gdsc-core-vdd-supply = <&gcc_pcie_0_gdsc>;
+	/* without it the OF parser can't decode the PCI ranges and BAR 0 isn't assigned */
+	device_type = "pci";
+	qcom,pcie-clock-frequency = <0>, <0>, <19200000>, <0>, <0>, <0>, <0>,
+		<0>, <100000000>, <0>, <0>, <0>, <0>, <0>;
+	clock-suppressible = <0>, <0>, <0>, <0>, <0>, <0>, <1>,
+		<0>, <0>, <0>, <0>, <0>, <0>, <0>;
+};
