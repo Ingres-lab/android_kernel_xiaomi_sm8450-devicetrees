@@ -547,6 +547,14 @@
 	regulator-min-microvolt = <3300000>;
 	regulator-max-microvolt = <3300000>;
 	qcom,init-voltage = <3300000>;
+	/*
+	 * Fingerprint sensor supply. The FPC HAL selects the 3V3 power config,
+	 * which on this board has no switch GPIO, so no driver ever claims
+	 * L7C and 6.6 turns it off after boot: the TA then gets
+	 * FPC_ERROR_SENSOR on the first capture.
+	 */
+	regulator-boot-on;
+	regulator-always-on;
 };
 &soc {
 	fingerprint_goodix {
