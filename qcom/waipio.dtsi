@@ -656,6 +656,7 @@
 };
 
 #include "waipio-clock.dtsi"
+#include "waipio-walt.dtsi"
 
 &soc {
 	#address-cells = <1>;

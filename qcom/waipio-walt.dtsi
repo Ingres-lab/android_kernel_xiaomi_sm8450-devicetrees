@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * WALT cycle counter for the 6.6 sched-walt module. It must sit under
+ * /soc/walt: walt_init_cycle_counter() populates that node itself, after the
+ * WALT clusters exist (probing earlier dereferences unset cluster data).
+ * Same EPSS domains as cpufreq_hw. Layout from kera-walt.dtsi.
+ */
+
+&soc {
+	walt {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		cycle-cntr@17d91000 {
+			compatible = "qcom,epss";
+			reg = <0x17d91000 0x1000>,
+			      <0x17d92000 0x1000>,
+			      <0x17d93000 0x1000>;
+			reg-names = "freq-domain0",
+				    "freq-domain1",
+				    "freq-domain2";
+		};
+	};
+};
