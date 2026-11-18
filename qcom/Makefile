@@ -162,31 +162,9 @@ canoe-overlays-dtb-$(CONFIG_ARCH_BOURTZI) += $(BOURTZI_BOARDS) $(NOAPQ_BOURTZI_B
 dtb-y += $(canoe-dtb-y) $(canoe-overlays-dtb-y)
 
 WAIPIO_BASE_DTB += waipio.dtb waipiop.dtb waipio-v2.dtb waipiop-v2.dtb
+# ingres (POCO F4 GT): only the device's own overlay is built for waipio
 WAIPIO_BOARDS += \
-		waipio-rumi-overlay.dtbo \
-		waipio-mtp-pm8008-overlay.dtbo \
-		waipio-cdp-pm8008-overlay.dtbo \
-		waipio-qrd-pm8008-overlay.dtbo \
-		waipio-atp-pm8008-overlay.dtbo \
-		waipio-mtp-pm8010-overlay.dtbo \
-		waipio-cdp-pm8010-overlay.dtbo \
-		waipio-qrd-pm8010-overlay.dtbo \
-		waipio-qrd-pm8010-2s-overlay.dtbo \
-		waipio-atp-pm8010-overlay.dtbo \
-		waipio-lemur-mtp-pm8008-overlay.dtbo \
-		waipio-lemur-mtp-pm8010-overlay.dtbo \
-		waipio-lemur-cdp-pm8008-overlay.dtbo \
-		waipio-lemur-cdp-pm8010-overlay.dtbo \
-		waipio-kiwi-mtp-pm8008-overlay.dtbo \
-		waipio-kiwi-mtp-pm8010-overlay.dtbo \
-		waipio-kiwi-cdp-pm8008-overlay.dtbo \
-		waipio-kiwi-cdp-pm8010-overlay.dtbo \
-		waipio-mtp-68disp-pm8008-overlay.dtbo \
-		waipio-mtp-68disp-pm8010-overlay.dtbo \
-		waipio-cdp-xr-overlay.dtbo \
-		waipio-mtp-xr-overlay.dtbo \
-		waipio-cdp-xr-pcie-overlay.dtbo \
-		waipio-mtp-xr-pcie-overlay.dtbo
+		ingres-sm8450-boot-overlay.dtbo
 
 waipio-dtb-$(CONFIG_ARCH_WAIPIO) += \
 	$(call add-overlays, $(WAIPIO_BOARDS) ,$(WAIPIO_BASE_DTB))
