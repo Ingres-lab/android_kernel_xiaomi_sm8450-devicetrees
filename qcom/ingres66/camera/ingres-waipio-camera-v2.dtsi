@@ -1,0 +1,69 @@
+/* waipio v2 camera clock rates (from camera/waipio-camera-overlay-v2.dts) */
+&cam_sfe0 {
+	clock-rates =
+		<0 432000000 0 0>,
+		<0 594000000 0 0>,
+		<0 675000000 0 0>,
+		<0 727000000 0 0>,
+		<0 727000000 0 0>;
+};
+
+&cam_sfe1 {
+	clock-rates =
+		<0 432000000 0 0>,
+		<0 594000000 0 0>,
+		<0 675000000 0 0>,
+		<0 727000000 0 0>,
+		<0 727000000 0 0>;
+};
+
+&cam_vfe0 {
+	clock-rates =
+		<0 432000000 0 0>,
+		<0 594000000 0 0>,
+		<0 675000000 0 0>,
+		<0 727000000 0 0>,
+		<0 727000000 0 0>;
+};
+
+&cam_vfe1 {
+	clock-rates =
+		<0 432000000 0 0>,
+		<0 594000000 0 0>,
+		<0 675000000 0 0>,
+		<0 727000000 0 0>,
+		<0 727000000 0 0>;
+};
+
+&cam_vfe2 {
+	clock-rates =
+		<0 432000000 0 0>,
+		<0 594000000 0 0>,
+		<0 675000000 0 0>,
+		<0 727000000 0 0>,
+		<0 727000000 0 0>;
+};
+
+&cam_csiphy0 {
+	rgltr-enable-sync = <0>;
+};
+
+&cam_csiphy1 {
+	rgltr-enable-sync = <0>;
+};
+
+&cam_csiphy2 {
+	rgltr-enable-sync = <0>;
+};
+
+&cam_csiphy3 {
+	rgltr-enable-sync = <0>;
+};
+
+&cam_csiphy4 {
+	rgltr-enable-sync = <0>;
+};
+
+&cam_csiphy5 {
+	rgltr-enable-sync = <0>;
+};

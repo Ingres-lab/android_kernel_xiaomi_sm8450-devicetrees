@@ -1,0 +1,71 @@
+/dts-v1/;
+/plugin/;
+
+/*
+ * ingres (POCO F4 GT / Redmi K50 Gaming): the single combined overlay for the
+ * 6.12 kernel (board + SDE + panel + MMRM + audio + camera + video + EVA).
+ * ABL applies exactly one dtbo entry with libufdt, which cannot resolve labels
+ * that a previously applied overlay introduced, so everything that references
+ * the techpack nodes must be in the same overlay as the nodes themselves.
+ *
+ * The 6.12 waipio base DT carries no techpack nodes. Audio, camera, video and
+ * EVA run the Neo 6.6 drivers, so their nodes are the working Neo 6.6 ones
+ * (ingres66/, copied from the 6.6 sm8450-devicetrees). Display runs the 6.12
+ * driver with the Xiaomi changes; its waipio SDE/panel DT also comes from 6.6
+ * (Qualcomm ships no 6.12 waipio display DT).
+ */
+#include <dt-bindings/clock/qcom,sm8450-camcc.h>
+#include <dt-bindings/clock/qcom,sm8450-videocc.h>
+#include <dt-bindings/clock/qcom,sm8450-dispcc.h>
+
+#include "ingres-sm8450.dtsi"
+#include "ingres-wl2866d.dtsi"
+#include "ingres66/display/display/waipio-sde.dtsi"
+#include "ingres66/display/display/ingres-sde-display-mtp.dtsi"
+/* MMRM (multimedia clock arbiter): msm_drm/camera/video register clients with it */
+#include "ingres66/mmrm/waipio-v2-mmrm.dtsi"
+/* audio: sound card, adsp-loader, LPASS codecs */
+#include "ingres66/audio/waipio-audio.dtsi"
+#include "ingres66/audio/waipio-audio-mtp.dtsi"
+#include "ingres66/audio/ingres-audio.dtsi"
+/* camera: core (CPAS/ICP/IFE/CSIPHY/CCI, cam_req_mgr), waipio v2 clock rates, ingres sensors */
+#include <dt-bindings/interconnect/qcom,waipio.h>
+#include "ingres66/camera/waipio-camera.dtsi"
+#include "ingres66/camera/ingres-waipio-camera-v2.dtsi"
+#include "ingres66/camera/ingres-sm8450-camera-sensor.dtsi"
+/* video codec (msm_vidc, iris2) */
+#include "ingres66/video/waipio-vidc.dtsi"
+/* EVA/CVP engine (CamX EVANode needs a session) */
+#include "ingres66/eva/eva/waipio-eva.dtsi"
+
+/ {
+	model = "Ingres based on Qualcomm Technologies, Inc SM8450";
+	compatible = "qcom,waipio-mtp", "qcom,waipio", "qcom,mtp";
+	qcom,msm-id = <457 0x10000>, <482 0x10000>, <457 0x20000>, <482 0x20000>, <552 0x10000>;
+	qcom,board-id = <0x10008 0>, <0x03010008 0x03>;
+	xiaomi,miboard-id = <0x4 0>;
+
+	/*
+	 * Upstream gcc-sm8450 (6.12) keeps the camera/display AHB clocks always on
+	 * and does not register them; the 6.6 camera (CPAS) and the display DT still
+	 * list them, so give them a rate-0 stand-in instead of a failing clk_get.
+	 */
+	ingres_gcc_camera_ahb: ingres-gcc-camera-ahb-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <0>;
+		clock-output-names = "gcc_camera_ahb_clk";
+	};
+
+	ingres_gcc_disp_ahb: ingres-gcc-disp-ahb-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <0>;
+		clock-output-names = "gcc_disp_ahb_clk";
+	};
+};
+
+/* kgsl takes the GPU chip id from DT first (no socinfo part info on waipio). A730 v2 = gen7_0_1 */
+&msm_gpu {
+	qcom,chipid = <0x07030001>;
+};

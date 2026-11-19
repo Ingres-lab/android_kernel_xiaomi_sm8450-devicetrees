@@ -164,7 +164,7 @@ dtb-y += $(canoe-dtb-y) $(canoe-overlays-dtb-y)
 WAIPIO_BASE_DTB += waipio.dtb waipiop.dtb waipio-v2.dtb waipiop-v2.dtb
 # ingres (POCO F4 GT): only the device's own overlay is built for waipio
 WAIPIO_BOARDS += \
-		ingres-sm8450-boot-overlay.dtbo
+		ingres-sm8450-full-overlay.dtbo
 
 waipio-dtb-$(CONFIG_ARCH_WAIPIO) += \
 	$(call add-overlays, $(WAIPIO_BOARDS) ,$(WAIPIO_BASE_DTB))

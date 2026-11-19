@@ -312,7 +312,7 @@ _platform_map = {
         ],
         "dtbo_list": [
             # ingres (POCO F4 GT): only the device's own overlay
-            {"name": "ingres-sm8450-boot-overlay.dtbo"},
+            {"name": "ingres-sm8450-full-overlay.dtbo"},
         ],
     },
     "malabar": {
